@@ -1,4 +1,5 @@
 pub mod route_todo;
+pub mod route_file;
 
 use sqlx::{FromRow, PgPool};
 
