@@ -7,11 +7,16 @@ use axum::{
     routing::{get, post},
     Json, Router,
 };
+
 use serde::{Deserialize, Serialize};
 use shuttle_runtime::CustomError;
+use shuttle_secrets::SecretStore;
 use sqlx::{FromRow, PgPool};
 
+mod errors;
 mod routes;
+
+
 use crate::routes::route_file::{accept_form, save_request_body, show_form};
 use crate::routes::route_todo::{add, retrieve};
 
@@ -22,10 +27,14 @@ const UPLOADS_DIRECTORY: &str = "uploads";
 #[derive(Clone)]
 struct MyState {
     pool: PgPool,
+    vector_db: VectorDB,
 }
 
 #[shuttle_runtime::main]
-async fn axum(#[shuttle_shared_db::Postgres] pool: PgPool) -> shuttle_axum::ShuttleAxum {
+async fn axum(
+    #[shuttle_shared_db::Postgres] pool: PgPool,
+    #[shuttle_secrets::Secrets] secret_store: SecretStore,
+) -> shuttle_axum::ShuttleAxum {
     // Check if the uploads directory exists and create it if not.
 
     if !std::path::Path::new(UPLOADS_DIRECTORY).exists() {
@@ -40,13 +49,15 @@ async fn axum(#[shuttle_shared_db::Postgres] pool: PgPool) -> shuttle_axum::Shut
         .await
         .map_err(CustomError::new)?;
 
-    let state = MyState { pool };
+    let mut vector_db = VectorDB::new(&secrets)?;
+
+    let state = MyState { pool, vector_db };
     let router = Router::new()
         .route("/todo", post(add))
         .route("/todo/:id", get(retrieve))
-        .with_state(state)
         .route("/", get(show_form).post(accept_form))
-        .route("/file/:file_name", post(save_request_body));
+        .route("/file/:file_name", post(save_request_body))
+        .with_state(state);
 
     Ok(router.into())
 }

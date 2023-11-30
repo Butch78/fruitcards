@@ -8,10 +8,12 @@ edition = "2021"
 # -- App Libs
 lib-utils = { path = "../../libs/lib-utils"}
 lib-core = { path = "../../libs/lib-core"}
+vector = { path = "../../services/vector"}
 
 
 axum = {versio = "0.7.1", features = ["multipart"]}
-tokio = "1.28.2"
+tempfile = "3.2.0"
+tokio = "1.34.0"
 tracing = "0.1.40"
 serde = { version = "1.0.148", features = ["derive"] }
 sqlx = { version = "0.7.1", features = ["runtime-tokio-native-tls", "postgres"] }
@@ -22,5 +24,7 @@ orca = { git = "https://github.com/scrippt-tech/orca"}
 # -- Shuttle
 shuttle-shared-db = { version = "0.34.1", features = ["postgres"] }
 shuttle-axum = { version = "0.34.1", default-features = false, features = ["axum-0-7"] }
-shuttle-runtime = "0.34.0"
+shuttle-runtime = "0.34.1"
+shuttle-secrets = "0.34.1"
+
 
