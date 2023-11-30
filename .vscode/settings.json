@@ -1,0 +1,29 @@
+{
+    "rust-analyzer.linkedProjects": [
+        "./Cargo.toml",
+        "./crates/libs/lib-utils/Cargo.toml",
+        "./crates/services/web-server/Cargo.toml",
+        "./crates/libs/lib-core/Cargo.toml",
+        "./crates/libs/lib-core/Cargo.toml"
+    ],
+    "workbench.colorCustomizations": {
+        "activityBar.activeBackground": "#e229df",
+        "activityBar.background": "#e229df",
+        "activityBar.foreground": "#e7e7e7",
+        "activityBar.inactiveForeground": "#e7e7e799",
+        "activityBarBadge.background": "#53540b",
+        "activityBarBadge.foreground": "#e7e7e7",
+        "commandCenter.border": "#e7e7e799",
+        "sash.hoverBorder": "#e229df",
+        "statusBar.background": "#be1abc",
+        "statusBar.foreground": "#e7e7e7",
+        "statusBarItem.hoverBackground": "#e229df",
+        "statusBarItem.remoteBackground": "#be1abc",
+        "statusBarItem.remoteForeground": "#e7e7e7",
+        "titleBar.activeBackground": "#be1abc",
+        "titleBar.activeForeground": "#e7e7e7",
+        "titleBar.inactiveBackground": "#be1abc99",
+        "titleBar.inactiveForeground": "#e7e7e799"
+    },
+    "peacock.remoteColor": "#be1abc"
+}

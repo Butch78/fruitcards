@@ -1,0 +1,18 @@
+[workspace.lints.rust]
+unsafe_code = "forbid"
+
+[workspace]
+resolver = "2"
+members = [
+    # -- Tools
+    "crates/tools/gen-key",
+
+    # -- Application Libraries
+    # -- "crates/libs/lib-auth", # e.g., for pwd, token.
+    "crates/libs/lib-utils", # e.g., base64, time.
+    # -- "crates/libs/lib-file", # e.g., file, dir, S3.
+    "crates/libs/lib-core", # e.g., model, ctx, config, pwd, token.
+
+    # -- Application Services
+    "crates/services/web-server"
+]
