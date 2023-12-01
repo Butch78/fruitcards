@@ -1,5 +1,5 @@
 use anyhow::Result;
-use openai::embeddings::Embedding;
+use async_openai::types::Embedding;
 use qdrant_client::{
     prelude::{Payload, QdrantClient, QdrantClientConfig},
     qdrant::{
@@ -9,11 +9,9 @@ use qdrant_client::{
 };
 use serde_json::json;
 use shuttle_secrets::SecretStore;
+use tokio::fs::File;
 
-use crate::{
-    contents::File,
-    errors::{EmbeddingError, SetupError},
-};
+use crate::errors::{EmbeddingError, SetupError};
 
 static COLLECTION: &str = "docs";
 
@@ -24,15 +22,15 @@ pub struct VectorDB {
 
 impl VectorDB {
     pub fn new(secrets: &SecretStore) -> Result<Self> {
-        let qdrant_token = secrets
-            .get("QDRANT_API_KEY")
-            .ok_or(SetupError("QDRANT_TOKEN not available"))?;
-        let qdrant_url = secrets
-            .get("QDRANT_URL")
-            .ok_or(SetupError("QDRANT_URL not available"))?;
+        // let _qdrant_token = secrets
+        //     .get("QDRANT_API_KEY")
+        //     .ok_or(SetupError("QDRANT_TOKEN not available"))?;
+        // let qdrant_url = secrets
+        //     .get("QDRANT_URL")
+        //     .ok_or(SetupError("QDRANT_URL not available"))?;
 
-        let mut qdrant_config = QdrantClientConfig::from_url(&qdrant_url);
-        qdrant_config.set_api_key(&qdrant_token);
+        let mut qdrant_config = QdrantClientConfig::from_url("http://localhost:6333");
+        // qdrant_config.set_api_key(&qdrant_token);
 
         let client = QdrantClient::new(Some(qdrant_config))?;
 
@@ -63,14 +61,12 @@ impl VectorDB {
 
     pub async fn upsert_embedding(&mut self, embedding: Embedding, file: &File) -> Result<()> {
         let payload: Payload = json!({
-            "id": file.path.clone(),
+            "id":"TODO",
         })
         .try_into()
         .map_err(|_| EmbeddingError {})?;
 
-        println!("Embedded: {}", file.path);
-
-        let vec: Vec<f32> = embedding.vec.iter().map(|&x| x as f32).collect();
+        let vec: Vec<f32> = embedding.embedding.iter().map(|&x| x as f32).collect();
 
         let points = vec![PointStruct::new(self.id, vec, payload)];
         self.client.upsert_points(COLLECTION, points, None).await?;
@@ -80,7 +76,7 @@ impl VectorDB {
     }
 
     pub async fn search(&self, embedding: Embedding) -> Result<ScoredPoint> {
-        let vec: Vec<f32> = embedding.vec.iter().map(|&x| x as f32).collect();
+        let vec: Vec<f32> = embedding.embedding.iter().map(|&x| x as f32).collect();
 
         let payload_selector = WithPayloadSelector {
             selector_options: Some(SelectorOptions::Enable(true)),

@@ -13,8 +13,8 @@ use axum::{
     BoxError, Router,
 };
 use futures::{Stream, TryStreamExt};
+use lib_utils::pdf::Pdf;
 use std::io;
-use tempfile::NamedTempFile;
 use tokio::{fs::File, io::BufWriter};
 use tokio_util::io::StreamReader;
 
@@ -71,6 +71,18 @@ pub async fn accept_form(mut multipart: Multipart) -> Result<Redirect, (StatusCo
     }
 
     Ok(Redirect::to("/"))
+}
+
+// Embed a 'Stream' into a PDF
+pub async fn embed_stream(
+    Path(file_name): Path<String>,
+    request: Request,
+) -> Result<(), (StatusCode, String)> {
+    let stream = request.into_body().into_data_stream();
+    let pdf = Pdf::from_stream(stream, false).unwrap();
+    let mut file = File::create(file_name).await.unwrap();
+    pdf.write(&mut file).await.unwrap();
+    Ok(())
 }
 
 // Save a `Stream` to a file
