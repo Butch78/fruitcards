@@ -8,10 +8,15 @@ edition = "2021"
 lib-utils = { path = "../../libs/lib-utils"}
 lib-core = { path = "../../libs/lib-core"}
 
-anyhow = "1.0.75"
-tokio = "1.34.0"
-orca = { git = "https://github.com/scrippt-tech/orca" }
+
+
+
+anyhow = {workspace = true}
+orca = {workspace = true}
 async-openai = "0.17.1"
 qdrant-client = "1.6.0"
 
-shuttle-secrets = "0.34.1"
+shuttle-secrets = {workspace = true}
+axum = {workspace = true}
+tokio = {workspace = true}
+serde_json = {workspace = true}
