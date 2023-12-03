@@ -1,8 +1,4 @@
-//! Run with
-//!
-//! ```not_rust
-//! cargo run -p example-stream-to-file
-//! ```
+// region:    --- Modules
 
 use axum::{
     body::Bytes,
@@ -13,10 +9,20 @@ use axum::{
     BoxError, Router,
 };
 use futures::{Stream, TryStreamExt};
-use lib_utils::pdf::Pdf;
-use std::io;
-use tokio::{fs::File, io::BufWriter};
+use orca::{
+    llm::{openai::OpenAI, Embedding, EmbeddingResponse},
+    prompts,
+    qdrant::Qdrant,
+    record::{pdf::Pdf, Record, Spin},
+};
+use std::{env, io};
+use tokio::{
+    fs::File,
+    io::{AsyncReadExt, AsyncWriteExt, BufWriter},
+};
 use tokio_util::io::StreamReader;
+
+// endregion: --- Modules
 
 const UPLOADS_DIRECTORY: &str = "uploads";
 
@@ -40,7 +46,7 @@ pub async fn show_form() -> Html<&'static str> {
                 <title>Upload something!</title>
             </head>
             <body>
-                <form action="/" method="post" enctype="multipart/form-data">
+                <form action="/upload/" method="post" enctype="multipart/form-data">
                     <div>
                         <label>
                             Upload file:
@@ -74,14 +80,59 @@ pub async fn accept_form(mut multipart: Multipart) -> Result<Redirect, (StatusCo
 }
 
 // Embed a 'Stream' into a PDF
-pub async fn embed_stream(
-    Path(file_name): Path<String>,
-    request: Request,
-) -> Result<(), (StatusCode, String)> {
-    let stream = request.into_body().into_data_stream();
-    let pdf = Pdf::from_stream(stream, false).unwrap();
-    let mut file = File::create(file_name).await.unwrap();
-    pdf.write(&mut file).await.unwrap();
+pub async fn stream_to_embedding(mut multipart: Multipart) -> Result<(), (StatusCode, String)> {
+
+    let mut buffer = Vec::new();
+
+    while let Some(mut field) = multipart
+        .next_field()
+        .await
+        .map_err(|err| (StatusCode::BAD_REQUEST, err.to_string()))?
+    {
+        while let Some(chunk) = field
+            .chunk()
+            .await
+            .map_err(|err| (StatusCode::BAD_REQUEST, err.to_string()))?
+        {
+            // Load into a buffer
+            buffer.extend_from_slice(&chunk);
+        }
+    }
+
+    println!("Creating Embedding");
+
+    //  Setup OpenAI Key to environment variable
+    env::set_var(
+        "OPENAI_API_KEY",
+        "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",
+    );
+
+    std::env::set_var("STANDARD_FONTS", "./assets/pdf_fonts");
+
+    let open_ai: OpenAI = OpenAI::new().with_model("gpt-3.5-turbo-1106");
+
+    let collection = "pdfs";
+
+    let qdrant = Qdrant::new("http://localhost:6334").unwrap();
+
+    let pdf_records = Pdf::from_buffer(buffer, false)
+        .unwrap()
+        .spin()
+        .unwrap()
+        .split(399);
+
+    if qdrant.create_collection(&collection, 1536).await.is_ok() {
+        let embeddings = open_ai
+            .generate_embeddings(prompts!(&pdf_records))
+            .await
+            .unwrap();
+
+        qdrant
+            .insert_many(&collection, embeddings.to_vec2().unwrap(), pdf_records)
+            .await
+            .unwrap();
+    }
+
     Ok(())
 }
 

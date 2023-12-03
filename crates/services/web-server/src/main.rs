@@ -19,7 +19,7 @@ mod errors;
 mod routes;
 use vector::vector::VectorDB;
 
-use crate::routes::route_file::{accept_form, embed_stream, save_request_body, show_form};
+use crate::routes::route_file::{accept_form, save_request_body, show_form, stream_to_embedding};
 use crate::routes::route_todo::{add, retrieve};
 
 // endregion: --- Modules
@@ -62,7 +62,7 @@ async fn axum(
         .route("/todo/:id", get(retrieve))
         .route("/", get(show_form).post(accept_form))
         .route("/file/:file_name", post(save_request_body))
-        .route("/pdf/:file_name", post(embed_stream))
+        .route("/upload/", get(show_form).post(stream_to_embedding))
         .with_state(state);
 
     Ok(router.into())
