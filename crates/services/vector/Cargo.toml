@@ -9,12 +9,14 @@ lib-utils = { path = "../../libs/lib-utils"}
 lib-core = { path = "../../libs/lib-core"}
 
 
-
-
 anyhow = {workspace = true}
 orca = {workspace = true}
 async-openai = "0.17.1"
 qdrant-client = "1.6.0"
+lopdf = "0.30.0"
+pdf-extract = { version = "0.7.2"}
+text-splitter = "0.4.5"
+
 
 shuttle-secrets = {workspace = true}
 axum = {workspace = true}
