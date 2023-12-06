@@ -5,7 +5,8 @@
         "./crates/services/web-server/Cargo.toml",
         "./crates/libs/lib-core/Cargo.toml",
         "./crates/libs/lib-core/Cargo.toml",
-        "./crates/services/web-server/Cargo.toml"
+        "./crates/services/web-server/Cargo.toml",
+        "./crates/services/vector/Cargo.toml"
     ],
     "workbench.colorCustomizations": {
         "activityBar.activeBackground": "#e229df",

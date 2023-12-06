@@ -81,14 +81,17 @@ pub async fn accept_form(mut multipart: Multipart) -> Result<Redirect, (StatusCo
 
 // Embed a 'Stream' into a PDF
 pub async fn stream_to_embedding(mut multipart: Multipart) -> Result<(), (StatusCode, String)> {
-
-    let mut buffer = Vec::new();
-
     while let Some(mut field) = multipart
         .next_field()
         .await
         .map_err(|err| (StatusCode::BAD_REQUEST, err.to_string()))?
     {
+        let mut buffer = Vec::new();
+
+        // name of the file with extention
+        let name = field.file_name().unwrap().to_string();
+        println!("Name: {}", name);
+
         while let Some(chunk) = field
             .chunk()
             .await
@@ -97,40 +100,40 @@ pub async fn stream_to_embedding(mut multipart: Multipart) -> Result<(), (Status
             // Load into a buffer
             buffer.extend_from_slice(&chunk);
         }
-    }
 
-    println!("Creating Embedding");
+        println!("Creating Embedding");
 
-    //  Setup OpenAI Key to environment variable
-    env::set_var(
-        "OPENAI_API_KEY",
-        "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",
-    );
+        //  Setup OpenAI Key to environment variable
+        env::set_var(
+            "OPENAI_API_KEY",
+            "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",
+        );
 
-    std::env::set_var("STANDARD_FONTS", "./assets/pdf_fonts");
+        std::env::set_var("STANDARD_FONTS", "./assets/pdf_fonts");
 
-    let open_ai: OpenAI = OpenAI::new().with_model("gpt-3.5-turbo-1106");
+        let open_ai: OpenAI = OpenAI::new().with_model("gpt-3.5-turbo-1106");
 
-    let collection = "pdfs";
+        let collection = name;
 
-    let qdrant = Qdrant::new("http://localhost:6334").unwrap();
+        let qdrant = Qdrant::new("http://localhost:6334").unwrap();
 
-    let pdf_records = Pdf::from_buffer(buffer, false)
-        .unwrap()
-        .spin()
-        .unwrap()
-        .split(399);
+        let pdf_records = Pdf::from_buffer(buffer, false)
+            .unwrap()
+            .spin()
+            .unwrap()
+            .split(399);
 
-    if qdrant.create_collection(&collection, 1536).await.is_ok() {
-        let embeddings = open_ai
-            .generate_embeddings(prompts!(&pdf_records))
-            .await
-            .unwrap();
+        if qdrant.create_collection(&collection, 1536).await.is_ok() {
+            let embeddings = open_ai
+                .generate_embeddings(prompts!(&pdf_records))
+                .await
+                .unwrap();
 
-        qdrant
-            .insert_many(&collection, embeddings.to_vec2().unwrap(), pdf_records)
-            .await
-            .unwrap();
+            qdrant
+                .insert_many(&collection, embeddings.to_vec2().unwrap(), pdf_records)
+                .await
+                .unwrap();
+        }
     }
 
     Ok(())

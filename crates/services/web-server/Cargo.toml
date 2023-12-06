@@ -17,6 +17,9 @@ sqlx = { version = "0.7.3", features = ["runtime-tokio-native-tls", "postgres"] 
 futures = "0.3"
 orca = { git = "https://github.com/scrippt-tech/orca"}
 async-openai = "0.17.1"
+lopdf = "0.30.0"
+pdf-extract = { version = "0.7.2"}
+text-splitter = { version = "0.4.5"}
 
 anyhow = {workspace = true}
 tokio = {workspace = true}
