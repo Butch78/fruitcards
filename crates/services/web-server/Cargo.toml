@@ -15,11 +15,11 @@ tempfile = "3.2.0"
 serde = { version = "1.0.148", features = ["derive"] }
 sqlx = { version = "0.7.3", features = ["runtime-tokio-native-tls", "postgres"] }
 futures = "0.3"
-orca = { git = "https://github.com/scrippt-tech/orca"}
-async-openai = "0.17.1"
-lopdf = "0.30.0"
-pdf-extract = { version = "0.7.2"}
-text-splitter = { version = "0.4.5"}
+orca = {workspace = true}
+async-openai = "0.18.1"
+lopdf = {workspace = true}
+pdf-extract = {workspace = true}
+text-splitter = { workspace=true }
 
 anyhow = {workspace = true}
 tokio = {workspace = true}
@@ -27,7 +27,7 @@ tokio-util =  {workspace = true}
 tracing = {workspace = true}
 axum = {workspace = true} 
 shuttle-shared-db = {workspace = true, features = ["postgres"]}
-shuttle-axum = { workspace = true, default-features = false, features = ["axum-0-7"] }
+shuttle-axum = { workspace = true }
 shuttle-runtime = {workspace = true} 
 shuttle-secrets = {workspace = true} 
 
