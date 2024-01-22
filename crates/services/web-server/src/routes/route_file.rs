@@ -109,11 +109,10 @@ pub async fn stream_to_embedding(mut multipart: Multipart) -> Result<(), (Status
             "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",
         );
 
-        std::env::set_var("STANDARD_FONTS", "./assets/pdf_fonts");
 
         let open_ai: OpenAI = OpenAI::new().with_model("gpt-3.5-turbo-1106");
 
-        let collection = name;
+        let collection = "Software_Engineering";
 
         let qdrant = Qdrant::new("http://localhost:6334").unwrap();
 
@@ -123,17 +122,21 @@ pub async fn stream_to_embedding(mut multipart: Multipart) -> Result<(), (Status
             .unwrap()
             .split(399);
 
-        if qdrant.create_collection(&collection, 1536).await.is_ok() {
-            let embeddings = open_ai
-                .generate_embeddings(prompts!(&pdf_records))
-                .await
-                .unwrap();
+        let embeddings = open_ai
+            .generate_embeddings(prompts!(&pdf_records))
+            .await
+            .unwrap();
 
-            qdrant
-                .insert_many(&collection, embeddings.to_vec2().unwrap(), pdf_records)
-                .await
-                .unwrap();
-        }
+        println!("Created Embedding");
+
+        let payloads = vec!["payload1".to_string(), "payload2".to_string()];
+
+        qdrant
+            .insert_many(&collection, embeddings.to_vec2().unwrap(), payloads)
+            .await
+            .unwrap();
+
+        println!("Inserted Embedding");
     }
 
     Ok(())

@@ -8,18 +8,13 @@ edition = "2021"
 # -- App Libs
 lib-utils = { path = "../../libs/lib-utils"}
 lib-core = { path = "../../libs/lib-core"}
-vector = { path = "../../services/vector"}
+ai-scribe = { path = "../../services/ai-scribe"}
 
 
 tempfile = "3.2.0"
 serde = { version = "1.0.148", features = ["derive"] }
 sqlx = { version = "0.7.3", features = ["runtime-tokio-native-tls", "postgres"] }
 futures = "0.3"
-orca = {workspace = true}
-async-openai = "0.18.1"
-lopdf = {workspace = true}
-pdf-extract = {workspace = true}
-text-splitter = { workspace=true }
 
 anyhow = {workspace = true}
 tokio = {workspace = true}
