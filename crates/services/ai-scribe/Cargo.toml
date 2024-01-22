@@ -1,0 +1,27 @@
+[package]
+name = "ai-scribe"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# -- App Libs
+lib-utils = { path = "../../libs/lib-utils"}
+lib-core = { path = "../../libs/lib-core"}
+
+
+anyhow = {workspace = true}
+
+# -- AI
+async-openai = "0.18"
+qdrant-client  = "1.6.0"
+orca = { git = "https://github.com/scrippt-tech/orca" }
+
+# Extraction
+lopdf = {version = "0.30", default-features = false, features = ["nom_parser"]}
+pdf-extract = { version = "0.7.4"}
+text-splitter = { version = "0.6.3"}
+
+
+shuttle-secrets = {workspace = true}
+tokio = {workspace = true}
+serde_json = {workspace = true}

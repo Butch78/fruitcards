@@ -1,8 +1,14 @@
-pub mod errors;
-pub mod openai;
-pub mod vector;
-
 // region:    --- Modules
+
+mod ais;
+mod error;
+pub mod event;
+mod scribe;
+mod utils;
+
+pub use self::error::{Error, Result};
+
+pub use crate::scribe::*;
 
 // endregion: --- Modules
 

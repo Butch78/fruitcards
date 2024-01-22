@@ -72,6 +72,24 @@ dependencies = [
 ]
 
 [[package]]
+name = "ai-scribe"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "async-openai",
+ "lib-core",
+ "lib-utils",
+ "lopdf",
+ "orca",
+ "pdf-extract",
+ "qdrant-client",
+ "serde_json",
+ "shuttle-secrets",
+ "text-splitter 0.6.3",
+ "tokio",
+]
+
+[[package]]
 name = "allocator-api2"
 version = "0.2.16"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -174,31 +192,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6d416feee97712e43152cd42874de162b8f9b77295b1c85e5d92725cc8310bae"
 dependencies = [
  "async-trait",
-]
-
-[[package]]
-name = "async-openai"
-version = "0.17.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c3c6ce3eb96d0957f9d5af15b5b0d651e27da8b567d126ef7fefb889d21dda06"
-dependencies = [
- "async-convert",
- "backoff",
- "base64 0.21.5",
- "bytes",
- "derive_builder",
- "futures",
- "rand 0.8.5",
- "reqwest",
- "reqwest-eventsource",
- "secrecy",
- "serde",
- "serde_json",
- "thiserror",
- "tokio",
- "tokio-stream",
- "tokio-util",
- "tracing",
 ]
 
 [[package]]
@@ -2622,8 +2615,6 @@ name = "lib-utils"
 version = "0.1.0"
 dependencies = [
  "base64 0.21.5",
- "orca",
- "pdf",
  "serde_json",
  "time",
 ]
@@ -2720,14 +2711,12 @@ version = "0.30.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7ab029c5cd5b0a292b05e3121b6bcf02f20e58e85ffe6d5417a38c1f8f24cbf7"
 dependencies = [
- "chrono",
  "encoding_rs",
  "flate2",
  "itoa",
  "linked-hash-map",
  "log",
  "nom 7.1.3",
- "rayon",
  "time",
  "weezl",
 ]
@@ -3986,9 +3975,9 @@ dependencies = [
 
 [[package]]
 name = "qdrant-client"
-version = "1.6.0"
+version = "1.7.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "337c9a836a26e90a171fe8eb4c57e8d0a4e65a23cbac76685960df36c227081e"
+checksum = "90cf22c9f96056b730bdb189ccc72793db1fe106375165d5c7828fc1654b2909"
 dependencies = [
  "anyhow",
  "futures-util",
@@ -6114,25 +6103,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f1bddf1187be692e79c5ffeab891132dfb0f236ed36a43c7ed39f1165ee20191"
 
 [[package]]
-name = "vector"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "async-openai 0.17.1",
- "axum 0.7.4",
- "lib-core",
- "lib-utils",
- "lopdf",
- "orca",
- "pdf-extract",
- "qdrant-client",
- "serde_json",
- "shuttle-secrets",
- "text-splitter 0.4.5",
- "tokio",
-]
-
-[[package]]
 name = "version_check"
 version = "0.9.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -6251,15 +6221,12 @@ dependencies = [
 name = "web-server"
 version = "0.1.0"
 dependencies = [
+ "ai-scribe",
  "anyhow",
- "async-openai 0.18.1",
  "axum 0.7.4",
  "futures",
  "lib-core",
  "lib-utils",
- "lopdf",
- "orca",
- "pdf-extract",
  "serde",
  "shuttle-axum",
  "shuttle-runtime",
@@ -6267,11 +6234,9 @@ dependencies = [
  "shuttle-shared-db",
  "sqlx",
  "tempfile",
- "text-splitter 0.6.3",
  "tokio",
  "tokio-util",
  "tracing",
- "vector",
 ]
 
 [[package]]
