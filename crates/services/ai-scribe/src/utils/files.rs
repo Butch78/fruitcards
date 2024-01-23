@@ -1,24 +1,26 @@
 use crate::Result;
-use simple_fs::{get_buf_reader, SFile, SPath};
+use lopdf::*;
+use pdf_extract::*;
+use std::env;
 use std::fs::File;
 use std::io::Write;
 use std::io::{BufRead, BufWriter};
+use std::ops::Range;
+use text_splitter::{Characters, TextSplitter};
 
-pub fn bundle_to_file(files: Vec<SFile>, dst_file: &SPath) -> Result<()> {
-	let mut writer = BufWriter::new(File::create(dst_file)?);
+const MAX_CHARACTERS: Range<usize> = 500..2048;
 
-	for file in files {
-		let reader = get_buf_reader(&file)?;
+pub fn extract_file_text(buffer: &[u8]) -> Result<String> {
+    pdf_extract::extract_text_from_mem(&buffer)?;
+}
 
-		writeln!(writer, "\n// ==== file path: {file}\n")?;
+pub fn split_text(characters: &String) -> Vec<String> {
+    let mut splitter = TextSplitter::new(MAX_CHARACTERS, characters);
+    let mut parts = Vec::new();
 
-		for line in reader.lines() {
-			let line = line?;
-			writeln!(writer, "{}", line)?;
-		}
-		writeln!(writer, "\n\n")?;
-	}
-	writer.flush()?;
+    while let Some(part) = splitter.next() {
+        parts.push(part.to_string());
+    }
 
-	Ok(())
+    parts
 }

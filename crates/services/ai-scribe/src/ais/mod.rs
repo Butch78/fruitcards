@@ -8,8 +8,10 @@
 // region:    --- Modules
 
 pub mod asst;
+pub mod embeddings;
 mod event;
 pub mod msg;
+pub mod openai;
 mod types;
 
 pub use event::AisEvent;
@@ -27,36 +29,36 @@ use simple_fs::get_glob_set;
 
 const ENV_OPENAI_API_KEY: &str = "OPENAI_API_KEY";
 
-pub type OaClient = Client<OpenAIConfig>;
+pub type OpenAIClient = Client<OpenAIConfig>;
 
 /// Wraps the async-openai client and provides additional functionalities
 /// such as an event bus.
 #[derive(Debug)]
 pub struct AisClient {
-	oa_client: OaClient,
-	event_bus: EventBus,
+    openai_client: OpenAIClient,
+    event_bus: EventBus,
 }
 
 impl AisClient {
-	pub fn oa_client(&self) -> &OaClient {
-		&self.oa_client
-	}
-	pub fn event_bus(&self) -> &EventBus {
-		&self.event_bus
-	}
+    pub fn openai_client(&self) -> &OpenAIClient {
+        &self.openai_client
+    }
+    pub fn event_bus(&self) -> &EventBus {
+        &self.event_bus
+    }
 }
 
 pub fn new_ais_client(event_bus: EventBus) -> Result<AisClient> {
-	if std::env::var(ENV_OPENAI_API_KEY).is_ok() {
-		Ok(AisClient {
-			oa_client: Client::new(),
-			event_bus,
-		})
-	} else {
-		println!("No {ENV_OPENAI_API_KEY} env variable. Please set it.");
+    if std::env::var(ENV_OPENAI_API_KEY).is_ok() {
+        Ok(AisClient {
+            openai_client: Client::new(),
+            event_bus,
+        })
+    } else {
+        println!("No {ENV_OPENAI_API_KEY} env variable. Please set it.");
 
-		Err(Error::NoOpenAIApiKeyInEnv)
-	}
+        Err(Error::NoOpenAIApiKeyInEnv)
+    }
 }
 
 // endregion: --- Client
@@ -64,29 +66,31 @@ pub fn new_ais_client(event_bus: EventBus) -> Result<AisClient> {
 // region:    --- Danger Zone
 
 // DANGER ZONE - Make sure to triple check before calling. Not pub for now.
+
+#[cfg(feature = "openai-assistant")]
 #[allow(dead_code)]
-async fn delete_org_files(oac: &OaClient, globs: &[&str]) -> Result<u32> {
-	let oa_files = oac.files();
-	let files = oa_files.list(&[("purpose", "assistants")]).await?;
-	let mut count = 0;
+async fn delete_org_files(oac: &OpenAIClient, globs: &[&str]) -> Result<u32> {
+    let oa_files = oac.files();
+    let files = oa_files.list(&[("purpose", "assistants")]).await?;
+    let mut count = 0;
 
-	if globs.is_empty() {
-		return Err(Error::DeleteAllFilesRequiresAtLeastOneGlob);
-	}
+    if globs.is_empty() {
+        return Err(Error::DeleteAllFilesRequiresAtLeastOneGlob);
+    }
 
-	let globs = get_glob_set(globs)?;
+    let globs = get_glob_set(globs)?;
 
-	for file in files.data {
-		count += 1;
-		if globs.is_match(&file.filename) {
-			oa_files.delete(&file.id).await?;
-			println!("DELETED: {:?}", file.filename);
-		} else {
-			println!("DELETE SKIPPED: {:?}", file.filename);
-		}
-	}
+    for file in files.data {
+        count += 1;
+        if globs.is_match(&file.filename) {
+            oa_files.delete(&file.id).await?;
+            println!("DELETED: {:?}", file.filename);
+        } else {
+            println!("DELETE SKIPPED: {:?}", file.filename);
+        }
+    }
 
-	Ok(count)
+    Ok(count)
 }
 
 // endregion: --- Danger Zone

@@ -3,6 +3,12 @@ name = "ai-scribe"
 version = "0.1.0"
 edition = "2021"
 
+[features]
+default = []
+openai-assistant = ["simple-fs"]
+
+
+
 [dependencies]
 # -- App Libs
 lib-utils = { path = "../../libs/lib-utils"}
@@ -13,15 +19,23 @@ anyhow = {workspace = true}
 
 # -- AI
 async-openai = "0.18"
-qdrant-client  = "1.6.0"
-orca = { git = "https://github.com/scrippt-tech/orca" }
+qdrant-client  = "1.7.0"
+
+# -- D/Serialize
+serde = {workspace = true}
+serde_json = {workspace = true}
+
+# -- Files
+simple-fs = { version = "0.1", features = ["with-json", "with-toml"], optional =  true }
 
 # Extraction
 lopdf = {version = "0.30", default-features = false, features = ["nom_parser"]}
 pdf-extract = { version = "0.7.4"}
 text-splitter = { version = "0.6.3"}
 
+# -- Others
+derive_more = {version = "1.0.0-beta", features = ["from", "display", "deref"] }
+
 
 shuttle-secrets = {workspace = true}
 tokio = {workspace = true}
-serde_json = {workspace = true}

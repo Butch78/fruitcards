@@ -7,11 +7,7 @@ use qdrant_client::{
         PointStruct, ScoredPoint, SearchPoints, VectorParams, VectorsConfig, WithPayloadSelector,
     },
 };
-use serde_json::json;
 use shuttle_secrets::SecretStore;
-use tokio::fs::File;
-
-use crate::errors::{EmbeddingError, SetupError};
 
 static COLLECTION: &str = "docs";
 
@@ -59,6 +55,7 @@ impl VectorDB {
         Ok(())
     }
 
+    #[cfg(feature = "openai-assistant")]
     pub async fn upsert_embedding(&mut self, embedding: Embedding, file: &File) -> Result<()> {
         let payload: Payload = json!({
             "id":"TODO",

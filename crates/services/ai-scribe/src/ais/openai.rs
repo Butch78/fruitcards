@@ -4,7 +4,6 @@ use async_openai::{
     types::{CreateCompletionRequestArgs, CreateEmbeddingRequestArgs, Embedding},
     Client,
 };
-use orca::record::{pdf::Pdf, Spin};
 use shuttle_secrets::SecretStore;
 use tokio::{fs::File, sync::mpsc::Receiver};
 
@@ -17,8 +16,6 @@ pub fn setup(secrets: &SecretStore) -> Result<()> {
 
 pub async fn embed_file(file: &File) -> Result<Vec<Embedding>> {
     let client = Client::new();
-
-    
 
     let request = CreateEmbeddingRequestArgs::default()
         .model("text-embedding-ada-002")

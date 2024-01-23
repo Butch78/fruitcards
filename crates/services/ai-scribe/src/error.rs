@@ -2,6 +2,7 @@ use crate::event;
 use async_openai::error::OpenAIError;
 use async_openai::types::RunStatus;
 use derive_more::From;
+use qdrant_client::errors::QdrantError;
 use std::io;
 use tokio::sync::broadcast;
 
@@ -29,11 +30,11 @@ pub enum Error {
     #[from]
     IO(io::Error),
 
-    // -- Externals
-    #[from]
-    SimpleFs(simple_fs::Error),
     #[from]
     OpenAI(OpenAIError),
+
+    #[from]
+    Qdrant(QdrantError),
 }
 
 // region:    --- Error Boilerplate
