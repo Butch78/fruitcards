@@ -25,4 +25,5 @@ pub enum AisEvent {
         file_ref: FileRef,
         cause: String,
     },
+    EmbeddingsCreater()
 }

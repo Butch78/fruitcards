@@ -1,5 +1,5 @@
 pub use crate::ais::AisEvent;
-pub use crate::scribe::ScribeEvent;
+pub use crate::buddy::BuddyEvent;
 
 use crate::Result;
 use derive_more::From;
@@ -9,7 +9,7 @@ use tokio::sync::broadcast::{self, Receiver, Sender};
 #[derive(Debug, Clone, From)]
 pub enum Event {
     Ais(AisEvent),
-    Scribe(ScribeEvent),
+    Buddy(BuddyEvent),
 }
 
 /// EventBus allows all the components of this crate to send their events

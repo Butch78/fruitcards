@@ -31,7 +31,7 @@ pub struct CreateConfig {
 // region:    --- Asst CRUD
 
 pub async fn create(ais: &AisClient, config: &CreateConfig) -> Result<AsstId> {
-    let oac = ais.openai_client();
+    let oac = ais.oa_client();
 
     let oa_assts = oac.assistants();
 
@@ -89,7 +89,7 @@ pub async fn load_or_create(
 }
 
 pub async fn first_by_name(ais: &AisClient, name: &str) -> Result<Option<AssistantObject>> {
-    let oac = ais.openai_client();
+    let oac = ais.oa_client();
 
     let oa_assts = oac.assistants();
 
@@ -107,7 +107,7 @@ pub async fn upload_instructions(
     asst_id: &AsstId,
     inst_content: String,
 ) -> Result<()> {
-    let oac = ais.openai_client();
+    let oac = ais.oa_client();
 
     let oa_assts = oac.assistants();
     let modif = ModifyAssistantRequest {
@@ -120,7 +120,7 @@ pub async fn upload_instructions(
 }
 
 pub async fn delete(ais: &AisClient, asst_id: &AsstId) -> Result<()> {
-    let oac = ais.openai_client();
+    let oac = ais.oa_client();
 
     let oa_assts = oac.assistants();
     let oa_files = oac.files();
@@ -154,7 +154,7 @@ pub async fn delete(ais: &AisClient, asst_id: &AsstId) -> Result<()> {
 // region:    --- Thread
 
 pub async fn create_thread(ais: &AisClient) -> Result<ThreadId> {
-    let oac = ais.openai_client();
+    let oac = ais.oa_client();
 
     let oa_threads = oac.threads();
 
@@ -168,7 +168,7 @@ pub async fn create_thread(ais: &AisClient) -> Result<ThreadId> {
 }
 
 pub async fn get_thread(ais: &AisClient, thread_id: &ThreadId) -> Result<ThreadObject> {
-    let oac = ais.openai_client();
+    let oac = ais.oa_client();
 
     let oa_threads = oac.threads();
 
@@ -183,7 +183,7 @@ pub async fn run_thread_msg(
     thread_id: &ThreadId,
     msg: &str,
 ) -> Result<String> {
-    let oac = ais.openai_client();
+    let oac = ais.oa_client();
 
     let msg = user_msg(msg);
 
@@ -220,7 +220,7 @@ pub async fn run_thread_msg(
 }
 
 pub async fn get_first_thread_msg_content(ais: &AisClient, thread_id: &ThreadId) -> Result<String> {
-    let oac = ais.openai_client();
+    let oac = ais.oa_client();
 
     static QUERY: [(&str, &str); 1] = [("limit", "1")];
 
@@ -245,7 +245,7 @@ pub async fn get_files_hashmap(
     ais: &AisClient,
     asst_id: &AsstId,
 ) -> Result<HashMap<String, FileId>> {
-    let oac = ais.openai_client();
+    let oac = ais.oa_client();
 
     // -- Get all asst files (files do not have .name)
     let oas_assts = oac.assistants();
@@ -278,7 +278,7 @@ pub async fn upload_file_by_name(
     file: &SPath,
     force: bool,
 ) -> Result<(FileId, bool)> {
-    let oac = ais.openai_client();
+    let oac = ais.oa_client();
 
     let file_name = file.file_name();
     let mut file_id_by_name = get_files_hashmap(ais, asst_id).await?;

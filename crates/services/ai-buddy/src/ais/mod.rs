@@ -8,10 +8,8 @@
 // region:    --- Modules
 
 pub mod asst;
-pub mod embeddings;
 mod event;
 pub mod msg;
-pub mod openai;
 mod types;
 
 pub use event::AisEvent;
@@ -29,19 +27,19 @@ use simple_fs::get_glob_set;
 
 const ENV_OPENAI_API_KEY: &str = "OPENAI_API_KEY";
 
-pub type OpenAIClient = Client<OpenAIConfig>;
+pub type OaClient = Client<OpenAIConfig>;
 
 /// Wraps the async-openai client and provides additional functionalities
 /// such as an event bus.
 #[derive(Debug)]
 pub struct AisClient {
-    openai_client: OpenAIClient,
+    oa_client: OaClient,
     event_bus: EventBus,
 }
 
 impl AisClient {
-    pub fn openai_client(&self) -> &OpenAIClient {
-        &self.openai_client
+    pub fn oa_client(&self) -> &OaClient {
+        &self.oa_client
     }
     pub fn event_bus(&self) -> &EventBus {
         &self.event_bus
@@ -51,7 +49,7 @@ impl AisClient {
 pub fn new_ais_client(event_bus: EventBus) -> Result<AisClient> {
     if std::env::var(ENV_OPENAI_API_KEY).is_ok() {
         Ok(AisClient {
-            openai_client: Client::new(),
+            oa_client: Client::new(),
             event_bus,
         })
     } else {
@@ -66,10 +64,8 @@ pub fn new_ais_client(event_bus: EventBus) -> Result<AisClient> {
 // region:    --- Danger Zone
 
 // DANGER ZONE - Make sure to triple check before calling. Not pub for now.
-
-#[cfg(feature = "openai-assistant")]
 #[allow(dead_code)]
-async fn delete_org_files(oac: &OpenAIClient, globs: &[&str]) -> Result<u32> {
+async fn delete_org_files(oac: &OaClient, globs: &[&str]) -> Result<u32> {
     let oa_files = oac.files();
     let files = oa_files.list(&[("purpose", "assistants")]).await?;
     let mut count = 0;

@@ -55,22 +55,21 @@ impl VectorDB {
         Ok(())
     }
 
-    #[cfg(feature = "openai-assistant")]
-    pub async fn upsert_embedding(&mut self, embedding: Embedding, file: &File) -> Result<()> {
-        let payload: Payload = json!({
-            "id":"TODO",
-        })
-        .try_into()
-        .map_err(|_| EmbeddingError {})?;
+    // pub async fn upsert_embedding(&mut self, embedding: Embedding, file: &File) -> Result<()> {
+    //     let payload: Payload = json!({
+    //         "id":"TODO",
+    //     })
+    //     .try_into()
+    //     .map_err(|_| EmbeddingError {})?;
 
-        let vec: Vec<f32> = embedding.embedding.iter().map(|&x| x as f32).collect();
+    //     let vec: Vec<f32> = embedding.embedding.iter().map(|&x| x as f32).collect();
 
-        let points = vec![PointStruct::new(self.id, vec, payload)];
-        self.client.upsert_points(COLLECTION, points, None).await?;
-        self.id += 1;
+    //     let points = vec![PointStruct::new(self.id, vec, payload)];
+    //     self.client.upsert_points(COLLECTION, points, None).await?;
+    //     self.id += 1;
 
-        Ok(())
-    }
+    //     Ok(())
+    // }
 
     pub async fn search(&self, embedding: Embedding) -> Result<ScoredPoint> {
         let vec: Vec<f32> = embedding.embedding.iter().map(|&x| x as f32).collect();

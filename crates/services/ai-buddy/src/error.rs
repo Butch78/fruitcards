@@ -2,7 +2,6 @@ use crate::event;
 use async_openai::error::OpenAIError;
 use async_openai::types::RunStatus;
 use derive_more::From;
-use qdrant_client::errors::QdrantError;
 use std::io;
 use tokio::sync::broadcast;
 
@@ -10,7 +9,7 @@ pub type Result<T> = core::result::Result<T, Error>;
 
 #[derive(Debug, From)]
 pub enum Error {
-    // -- scribe
+    // -- buddy
     ShouldNotDeleteLocalFile(String),
     CannotFindThreadIdForConv(String),
 
@@ -30,11 +29,11 @@ pub enum Error {
     #[from]
     IO(io::Error),
 
+    // -- Externals
+    #[from]
+    SimpleFs(simple_fs::Error),
     #[from]
     OpenAI(OpenAIError),
-
-    #[from]
-    Qdrant(QdrantError),
 }
 
 // region:    --- Error Boilerplate

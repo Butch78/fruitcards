@@ -1,14 +1,14 @@
 // region:    --- Modules
 
 mod ais;
+mod buddy;
 mod error;
 pub mod event;
-mod scribe;
 mod utils;
 
 pub use self::error::{Error, Result};
 
-pub use crate::scribe::*;
+pub use crate::buddy::*;
 
 // endregion: --- Modules
 

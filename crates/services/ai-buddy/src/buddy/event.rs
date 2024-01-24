@@ -1,7 +1,7 @@
-//! scribe event
+//! Buddy event
 
 #[derive(Debug, Clone)]
-pub enum ScribeEvent {
+pub enum BuddyEvent {
     InstUploaded,
     ConvLoaded,
     ConvCreated,

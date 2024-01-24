@@ -9,12 +9,6 @@ use axum::{
     BoxError, Router,
 };
 use futures::{Stream, TryStreamExt};
-use orca::{
-    llm::{openai::OpenAI, Embedding, EmbeddingResponse},
-    prompts,
-    qdrant::Qdrant,
-    record::{pdf::Pdf, Record, Spin},
-};
 use std::{env, io};
 use tokio::{
     fs::File,
@@ -100,43 +94,6 @@ pub async fn stream_to_embedding(mut multipart: Multipart) -> Result<(), (Status
             // Load into a buffer
             buffer.extend_from_slice(&chunk);
         }
-
-        println!("Creating Embedding");
-
-        //  Setup OpenAI Key to environment variable
-        env::set_var(
-            "OPENAI_API_KEY",
-            "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",
-        );
-
-
-        let open_ai: OpenAI = OpenAI::new().with_model("gpt-3.5-turbo-1106");
-
-        let collection = "Software_Engineering";
-
-        let qdrant = Qdrant::new("http://localhost:6334").unwrap();
-
-        let pdf_records = Pdf::from_buffer(buffer, false)
-            .unwrap()
-            .spin()
-            .unwrap()
-            .split(399);
-
-        let embeddings = open_ai
-            .generate_embeddings(prompts!(&pdf_records))
-            .await
-            .unwrap();
-
-        println!("Created Embedding");
-
-        let payloads = vec!["payload1".to_string(), "payload2".to_string()];
-
-        qdrant
-            .insert_many(&collection, embeddings.to_vec2().unwrap(), payloads)
-            .await
-            .unwrap();
-
-        println!("Inserted Embedding");
     }
 
     Ok(())
