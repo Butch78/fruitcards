@@ -8,7 +8,7 @@ edition = "2021"
 # -- App Libs
 lib-utils = { path = "../../libs/lib-utils"}
 lib-core = { path = "../../libs/lib-core"}
-ai-scribe = { path = "../../services/ai-scribe"}
+ai-buddy = { path = "../../services/ai-buddy"}
 
 
 tempfile = "3.2.0"
@@ -21,8 +21,10 @@ tokio = {workspace = true}
 tokio-util =  {workspace = true}
 tracing = {workspace = true}
 axum = {workspace = true} 
+qdrant-client  = {workspace = true}
 shuttle-shared-db = {workspace = true, features = ["postgres"]}
 shuttle-axum = { workspace = true }
 shuttle-runtime = {workspace = true} 
 shuttle-secrets = {workspace = true} 
+shuttle-qdrant = {workspace = true}
 
