@@ -25,6 +25,5 @@ qdrant-client  = {workspace = true}
 shuttle-shared-db = {workspace = true, features = ["postgres"]}
 shuttle-axum = { workspace = true }
 shuttle-runtime = {workspace = true} 
-shuttle-secrets = {workspace = true} 
 shuttle-qdrant = {workspace = true}
 

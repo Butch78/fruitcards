@@ -42,5 +42,4 @@ text-splitter = { version = "0.6.3"}
 derive_more = {version = "1.0.0-beta", features = ["from", "display", "deref"] }
 
 
-shuttle-secrets = {workspace = true}
 tokio = {workspace = true}

@@ -4,7 +4,7 @@ use async_openai::{
     types::{CreateCompletionRequestArgs, CreateEmbeddingRequestArgs, Embedding},
     Client,
 };
-use shuttle_secrets::SecretStore;
+use shuttle_runtime::SecretStore;
 use tokio::{fs::File, sync::mpsc::Receiver};
 
 pub fn setup(secrets: &SecretStore) -> Result<()> {

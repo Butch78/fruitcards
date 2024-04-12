@@ -7,7 +7,7 @@ use qdrant_client::{
         PointStruct, ScoredPoint, SearchPoints, VectorParams, VectorsConfig, WithPayloadSelector,
     },
 };
-use shuttle_secrets::SecretStore;
+use shuttle_runtime::SecretStore;
 
 static COLLECTION: &str = "docs";
 

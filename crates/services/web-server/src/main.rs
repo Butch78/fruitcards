@@ -13,7 +13,7 @@ use axum::{
 use qdrant_client::prelude::*;
 
 use shuttle_runtime::CustomError;
-use shuttle_secrets::SecretStore;
+use shuttle_runtime::SecretStore;
 use sqlx::PgPool;
 
 mod errors;
@@ -35,14 +35,10 @@ pub struct MyState {
 #[shuttle_runtime::main]
 async fn axum(
     #[shuttle_shared_db::Postgres] pool: PgPool,
-    #[shuttle_secrets::Secrets] secrets: SecretStore,
+    #[shuttle_runtime::Secrets] secrets: SecretStore,
     #[shuttle_qdrant::Qdrant(cloud_url = "{secrets.CLOUD_URL}", api_key = "{secrets.API_KEY}")]
     qdrant: QdrantClient,
 ) -> shuttle_axum::ShuttleAxum {
-
-
-
-    
     // Check if the uploads directory exists and create it if not.
     if !std::path::Path::new(UPLOADS_DIRECTORY).exists() {
         // save files to a separate directory to not override files in the current directory
