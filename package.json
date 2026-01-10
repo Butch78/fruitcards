@@ -9,7 +9,7 @@
     "dev": "alchemy dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare",
+    "postinstall": "node -e \"if (!process.env.CI) require('child_process').execSync('nuxt prepare', {stdio: 'inherit'})\"",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix apps packages",
     "typecheck": "nuxt typecheck",
