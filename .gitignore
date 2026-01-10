@@ -6,6 +6,9 @@
 .cache
 dist
 
+# Alchemy
+.alchemy/
+
 # Node dependencies
 node_modules
 
@@ -29,3 +32,6 @@ coverage/
 # Playwright
 playwright-report/
 test-results/
+
+# TypeScript
+*.tsbuildinfo
