@@ -22,7 +22,7 @@
 
     <UPageSection
       id="features"
-      title="Everything you need to build modern Nuxt apps"
+      title="Everything you need to build modern Nuxt apps Matthew Aylward is going to build a personal website"
       description="Start with a solid foundation. This template includes all the essentials for building production-ready applications with Nuxt UI's powerful component system."
       :features="[{
         icon: 'i-lucide-rocket',
