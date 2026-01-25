@@ -7,6 +7,7 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@nuxt/hints',
     '@nuxt/image',
+    "nuxt-charts",
     '@nuxt/test-utils',
     '@nuxt/a11y',
     'nitro-cloudflare-dev'
@@ -30,10 +31,18 @@ export default defineNuxtConfig({
 
   css: ['~/assets/css/main.css'],
 
+  ui: {
+    colorMode: true,
+  },
+
+  colorMode: {
+    preference: 'dark',
+  },
+
   routeRules: {
     '/': { prerender: true }
   },
 
-  compatibilityDate: '2025-01-15',
+  compatibilityDate: '2025-01-25',
 
 })
