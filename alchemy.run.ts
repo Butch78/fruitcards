@@ -6,7 +6,10 @@ import { Nuxt } from "alchemy/cloudflare";
 // Initialize Alchemy - stage comes from CLI: --stage prod, --stage pr-123, etc.
 const app = await alchemy("fruitcards", {
   password: process.env.ALCHEMY_PASSWORD || process.env.ALCHEMY_SECRET_PASSWORD,
-  stateStore: (scope) => new CloudflareStateStore(scope),
+  // Use local filesystem for development, cloud for production
+  stateStore: process.env.NODE_ENV === "production" 
+    ? (scope) => new CloudflareStateStore(scope)
+    : undefined // Uses default FileSystemStateStore
 });
 
 export const worker = await Nuxt("fruitcards",{
@@ -45,5 +48,3 @@ This preview was built from commit ${process.env.GITHUB_SHA}
 }
 
 await app.finalize();
-
-
