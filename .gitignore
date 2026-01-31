@@ -6,6 +6,10 @@
 .cache
 dist
 
+.agents/*
+.claude/*
+.github/skills
+
 # Alchemy (keep wrangler config, ignore state)
 .alchemy/*
 !.alchemy/local/
