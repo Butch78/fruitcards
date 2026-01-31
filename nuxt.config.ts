@@ -13,6 +13,12 @@ export default defineNuxtConfig({
     'nitro-cloudflare-dev'
   ],
 
+  vite: {
+    optimizeDeps: {
+      include: ['to-px', 'striptags']
+    }
+  },
+
   devtools: {
     enabled: true,
 
