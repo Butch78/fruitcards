@@ -98,6 +98,15 @@ const appsItems = computed(() => [
     },
   },
   {
+    label: "Budget",
+    icon: "i-lucide-receipt",
+    to: "/apps/budget",
+    active: route.path === "/apps/budget",
+    onSelect: () => {
+      open.value = false;
+    },
+  },
+  {
     label: "Calendar",
     icon: "i-lucide-calendar",
     to: "/apps/calendar",

@@ -213,3 +213,54 @@ export interface PlanningSummary {
   fireNumber: number
   yearsToFire: number
 }
+
+// Budget Types
+export type BudgetCategoryType =
+  | "housing"
+  | "utilities"
+  | "groceries"
+  | "transport"
+  | "health"
+  | "insurance"
+  | "entertainment"
+  | "dining"
+  | "shopping"
+  | "subscriptions"
+  | "savings"
+  | "other"
+
+export interface BudgetCategory {
+  id: string
+  name: string
+  type: BudgetCategoryType
+  icon: string
+  color: string
+  budgeted: number
+  spent: number
+  isFixed: boolean
+  notes?: string | null
+}
+
+export interface BudgetItem {
+  id: string
+  categoryId: string
+  name: string
+  amount: number
+  isRecurring: boolean
+  dueDate?: number | null // Day of month (1-31)
+  isPaid: boolean
+  notes?: string | null
+}
+
+export interface BudgetSummary {
+  monthlyIncome: number
+  totalBudgeted: number
+  totalSpent: number
+  totalRemaining: number
+  savingsTarget: number
+  actualSavings: number
+  categories: BudgetCategory[]
+  items: BudgetItem[]
+  fixedExpenses: number
+  variableExpenses: number
+}
