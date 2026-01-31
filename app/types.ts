@@ -73,3 +73,66 @@ export interface TransactionSummary {
     expenses: number
   }[]
 }
+
+// Portfolio types
+export type AssetType = "stock" | "etf" | "crypto" | "bond" | "cash" | "other"
+
+export interface PortfolioHolding {
+  id: string
+  userId: string
+  symbol: string
+  name: string
+  assetType: AssetType
+  quantity: number
+  averageCost: number
+  currentPrice: number
+  currency: string
+  sector?: string | null
+  exchange?: string | null
+  notes?: string | null
+  createdAt: Date
+  updatedAt: Date
+}
+
+export interface PortfolioTransaction {
+  id: string
+  holdingId: string
+  type: "buy" | "sell" | "dividend"
+  quantity: number
+  price: number
+  fees: number
+  date: Date
+  notes?: string | null
+  createdAt: Date
+}
+
+export interface PortfolioSummary {
+  totalValue: number
+  totalCost: number
+  totalGain: number
+  totalGainPercent: number
+  dayChange: number
+  dayChangePercent: number
+  holdingsCount: number
+  byAssetType: {
+    assetType: AssetType
+    value: number
+    percentage: number
+    color: string
+  }[]
+  bySector: {
+    sector: string
+    value: number
+    percentage: number
+  }[]
+  topGainers: {
+    symbol: string
+    name: string
+    gainPercent: number
+  }[]
+  topLosers: {
+    symbol: string
+    name: string
+    gainPercent: number
+  }[]
+}
