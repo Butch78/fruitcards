@@ -89,6 +89,15 @@ const appsItems = computed(() => [
     },
   },
   {
+    label: "Planning",
+    icon: "i-lucide-calculator",
+    to: "/apps/planning",
+    active: route.path === "/apps/planning",
+    onSelect: () => {
+      open.value = false;
+    },
+  },
+  {
     label: "Calendar",
     icon: "i-lucide-calendar",
     to: "/apps/calendar",

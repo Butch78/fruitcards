@@ -136,3 +136,80 @@ export interface PortfolioSummary {
     gainPercent: number
   }[]
 }
+
+// Swiss Financial Planning Types
+export type SwissCanton =
+  | "ZH" | "BE" | "LU" | "UR" | "SZ" | "OW" | "NW" | "GL" | "ZG" | "FR"
+  | "SO" | "BS" | "BL" | "SH" | "AR" | "AI" | "SG" | "GR" | "AG" | "TG"
+  | "TI" | "VD" | "VS" | "NE" | "GE" | "JU"
+
+export interface UserFinancialProfile {
+  annualSalary: number
+  currency: "CHF" | "EUR" | "USD" | "AUD"
+  canton: SwissCanton
+  taxClass: "single" | "married" | "married_dual_income"
+  hasChildren: boolean
+  numberOfChildren: number
+  residencyStatus: "permit_b" | "permit_c" | "swiss_citizen"
+  originCountry: string
+  pillar2Contribution: number
+  pillar3aContribution: number
+  monthlyExpenses: number
+  savingsRate: number
+}
+
+export interface SwissTaxEstimate {
+  federalTax: number
+  cantonalTax: number
+  communalTax: number
+  churchTax: number
+  totalTax: number
+  effectiveTaxRate: number
+  wealthTax: number
+  withholdingTaxOnDividends: number
+  reclaimableWithholdingTax: number
+}
+
+export interface TaxOptimizationTip {
+  id: string
+  title: string
+  description: string
+  potentialSavings: number | null
+  category: "pillar3a" | "deductions" | "wealth" | "dividends" | "expat"
+  priority: "high" | "medium" | "low"
+  applicable: boolean
+}
+
+export interface FinancialProjection {
+  year: number
+  age: number
+  salary: number
+  portfolioValue: number
+  totalSavings: number
+  pillar2Value: number
+  pillar3aValue: number
+  netWorth: number
+  annualTax: number
+}
+
+export interface PlanningGoal {
+  id: string
+  name: string
+  targetAmount: number
+  currentAmount: number
+  targetDate: Date
+  category: "retirement" | "house" | "education" | "emergency" | "other"
+  priority: number
+}
+
+export interface PlanningSummary {
+  profile: UserFinancialProfile
+  taxEstimate: SwissTaxEstimate
+  optimizationTips: TaxOptimizationTip[]
+  projections: FinancialProjection[]
+  goals: PlanningGoal[]
+  monthlyNetIncome: number
+  monthlySavings: number
+  fireNumber: number
+  yearsToFire: number
+}
