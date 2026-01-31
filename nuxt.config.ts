@@ -13,6 +13,15 @@ export default defineNuxtConfig({
     "nitro-cloudflare-dev",
   ],
 
+  runtimeConfig: {
+    betterAuthSecret: process.env.BETTER_AUTH_SECRET,
+    githubClientId: process.env.GITHUB_CLIENT_ID,
+    githubClientSecret: process.env.GITHUB_CLIENT_SECRET,
+    public: {
+      betterAuthUrl: process.env.BETTER_AUTH_URL || "https://fruit.cards",
+    },
+  },
+
   vite: {
     optimizeDeps: {
       include: ["to-px", "striptags"],
@@ -21,11 +30,11 @@ export default defineNuxtConfig({
 
   devtools: {
     enabled: true,
-
     timeline: {
       enabled: true,
     },
   },
+
   nitro: {
     preset: "cloudflare-module",
     cloudflare: alchemy(),

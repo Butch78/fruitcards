@@ -17,16 +17,14 @@ useHead({
   }
 })
 
-const title = 'Nuxt Dashboard Template'
-const description = 'A professional dashboard template built with Nuxt UI, featuring multiple pages, data visualization, and comprehensive management capabilities for creating powerful admin interfaces.'
+const title = 'Fruit Cards'
+const description = 'Your personal tracking app for transactions, events, learnings, and contacts. Stay organized and in control.'
 
 useSeoMeta({
   title,
   description,
   ogTitle: title,
   ogDescription: description,
-  ogImage: 'https://ui.nuxt.com/assets/templates/nuxt/dashboard-light.png',
-  twitterImage: 'https://ui.nuxt.com/assets/templates/nuxt/dashboard-light.png',
   twitterCard: 'summary_large_image'
 })
 
@@ -50,7 +48,6 @@ function hideBanner() {
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
-
 
     <DiscountBanner class="z-50 max-w-4xl px-4 rounded-full mt-3 scale-110 top mx-auto" :visible="bannerVisible"
       @close="hideBanner" />

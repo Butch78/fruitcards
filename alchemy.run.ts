@@ -1,7 +1,7 @@
 import alchemy from "alchemy";
 import { GitHubComment } from "alchemy/github";
 import { CloudflareStateStore } from "alchemy/state";
-import { Nuxt } from "alchemy/cloudflare";
+import { D1Database, Nuxt } from "alchemy/cloudflare";
 
 // Initialize Alchemy - stage comes from CLI: --stage prod, --stage pr-123, etc.
 const app = await alchemy("fruitcards", {
@@ -12,13 +12,38 @@ const app = await alchemy("fruitcards", {
     : undefined // Uses default FileSystemStateStore
 });
 
-export const worker = await Nuxt("fruitcards",{
+// Create D1 Database for the application with migrations
+export const db = await D1Database("fruitcards-db", {
+  name: `fruitcards-${app.stage}-db`,
+  adopt: true,
+  migrationsDir: "./migrations",
+  dev: {
+    remote: true, // Use deployed remote database instead of local emulation
+  },
+});
 
+// Ensure database is ready before starting the app
+console.log("Initializing database resources...");
+await Promise.resolve(db);
+console.log("Database resources ready!");
+
+export const worker = await Nuxt("fruitcards", {
   name: `fruitcards-${app.stage}`,
   adopt: true,
   placement: { mode: "smart" },
   observability: { enabled: true },
-  domains: ["fruit.cards"]
+  domains: app.stage === "prod" ? ["fruit.cards"] : undefined,
+  bindings: {
+    DB: db,
+  },
+  vars: {
+    BETTER_AUTH_URL: app.stage === "prod"
+      ? "https://fruit.cards"
+      : `https://fruitcards-${app.stage}.workers.dev`,
+  },
+  dev: {
+    command: "nuxt dev",
+  },
 });
 
 console.log({

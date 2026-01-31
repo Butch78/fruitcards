@@ -1,162 +1,79 @@
-<script lang="ts" setup>
-import { issues } from "~/data/issues";
-const buttonAction = ref<"All" | "New">("All");
-const { queryParams, data, updatePage, updateSort } = useIssues();
-
-const { isNotificationsSlideOverOpen } = useDashboard();
+<script setup lang="ts">
+const { isAuthenticated, loginWithGithub } = await useAuth();
 </script>
 
 <template>
-  <UDashboardPanel id="home">
-    <template #header>
-      <UDashboardNavbar :ui="{ right: 'gap-3' }">
-        <template #leading>
-          <UDashboardSidebarCollapse class="-ml-0.5" />
+  <div>
+    <UPageHero
+      title="Your Personal Tracking Hub"
+      description="Track transactions, manage events, capture learnings, and nurture relationships. All in one beautiful, secure app."
+      :links="isAuthenticated ? [{
+        label: 'Go to Dashboard',
+        to: '/dashboards/one',
+        trailingIcon: 'i-lucide-arrow-right',
+        size: 'xl'
+      }] : [{
+        label: 'Get Started',
+        trailingIcon: 'i-lucide-arrow-right',
+        size: 'xl',
+        click: loginWithGithub
+      }, {
+        label: 'Learn More',
+        to: '#features',
+        size: 'xl',
+        color: 'neutral',
+        variant: 'subtle'
+      }]"
+    />
 
-          <Flex class="gap-2">
-            <UButton
-              icon="i-lucide-box"
-              variant="outline"
-              label="All Projects"
-              active-variant="subtle"
-              :active="buttonAction === 'All'"
-              @click="emit('update:action', 'All')"
-            />
-            <UButton
-              icon="i-lucide-plus"
-              label="new"
-              variant="ghost"
-              active-variant="subtle"
-              :active="buttonAction === 'New'"
-              @click="emit('update:action', 'New')"
-            />
-          </Flex>
-        </template>
+    <UPageSection
+      id="features"
+      title="Everything you need to stay organized"
+      description="A unified platform to track the things that matter most in your personal and professional life."
+      :features="[{
+        icon: 'i-lucide-wallet',
+        title: 'Transactions',
+        description: 'Track income and expenses with categories, recurring transactions, and insightful analytics.'
+      }, {
+        icon: 'i-lucide-calendar',
+        title: 'Events',
+        description: 'Never miss an important date. Manage events with reminders and keep your schedule organized.'
+      }, {
+        icon: 'i-lucide-book-open',
+        title: 'Learnings',
+        description: 'Capture knowledge as you go. Save notes, articles, and insights with tags for easy retrieval.'
+      }, {
+        icon: 'i-lucide-users',
+        title: 'CRM',
+        description: 'Build meaningful relationships. Track contacts, interactions, and never forget a connection.'
+      }, {
+        icon: 'i-lucide-shield-check',
+        title: 'Secure by Design',
+        description: 'Your data is protected with modern authentication and encrypted at rest on Cloudflare.'
+      }, {
+        icon: 'i-lucide-zap',
+        title: 'Lightning Fast',
+        description: 'Deployed on the edge for instant response times, no matter where you are in the world.'
+      }]"
+    />
 
-        <template #right>
-          <Flex class="gap-2">
-            <UButton variant="ghost" size="sm" icon="i-lucide-link" />
-            <UButton variant="ghost" size="sm" icon="i-lucide-plus" />
-            <USeparator orientation="vertical" class="h-4" />
-            <UTooltip text="Notifications" :shortcuts="['N']">
-              <UButton
-                color="neutral"
-                variant="ghost"
-                square
-                @click="isNotificationsSlideOverOpen = true"
-              >
-                <UChip color="error" inset>
-                  <UIcon
-                    name="i-lucide-message-circle"
-                    class="size-5 shrink-0"
-                  />
-                </UChip>
-              </UButton>
-            </UTooltip>
-          </Flex>
-        </template>
-      </UDashboardNavbar>
-    </template>
-
-    <template #body>
-      <FlexBetween>
-        <div class="space-y-2">
-          <Flex class="gap-4">
-            <FlexInline class="bg-warning/10 p-2 rounded">
-              <UIcon
-                name="i-lucide-activity"
-                class="text-dimmed text-warning"
-                size="14"
-              />
-            </FlexInline>
-            <h1 class="text-xl font-semibold">Distribution of Effort</h1>
-          </Flex>
-        </div>
-
-        <FiltersDropdowns />
-      </FlexBetween>
-
-      <div class="space-y-6">
-        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
-          <UCard class="lg:col-span-4 relative">
-            <template #header>
-              <div class="flex items-center justify-between">
-                <div>
-                  <h2 class="text-xl font-bold">
-                    Issue count by burn-up and status
-                  </h2>
-                  <p class="text-muted text-sm">
-                    Overview of issue progression over time
-                  </p>
-                </div>
-              </div>
-            </template>
-            <ChartsIssueBurnUp />
-          </UCard>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <UCard class="relative">
-            <div class="space-y-6">
-              <div>
-                <h2 class="text-xl font-bold">Type Distribution</h2>
-                <p class="text-muted text-sm">Issue distribution by category</p>
-              </div>
-              <ChartsIssueTypeBar />
-            </div>
-          </UCard>
-
-          <UCard class="relative">
-            <div class="space-y-6">
-              <div>
-                <h2 class="text-xl font-bold">Bugs Distribution</h2>
-                <p class="text-muted text-sm">
-                  Specific breakdown of bug reports
-                </p>
-              </div>
-              <ChartsIssuesBar />
-            </div>
-          </UCard>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <UCard>
-            <div class="space-y-6">
-              <div>
-                <h2 class="text-xl font-bold">Current Sprint</h2>
-                <p class="text-muted text-sm">
-                  Tasks assigned to the active sprint
-                </p>
-              </div>
-              <div class="divide-y divide-default">
-                <TablesSprint
-                  :query-params="queryParams"
-                  :data="data?.data || []"
-                  :total="data?.total || 0"
-                  @update:page="updatePage"
-                  @update:sorting="updateSort"
-                />
-              </div>
-            </div>
-          </UCard>
-
-          <UCard>
-            <div class="space-y-6">
-              <div>
-                <h2 class="text-xl font-bold">Recent Issues</h2>
-                <p class="text-muted text-sm">Latest updates and new entries</p>
-              </div>
-              <div class="divide-y divide-default">
-                <IssuesItem
-                  v-for="(issue, issueKey) in issues"
-                  :key="issueKey"
-                  :item="issue"
-                />
-              </div>
-            </div>
-          </UCard>
-        </div>
-      </div>
-    </template>
-  </UDashboardPanel>
+    <UPageSection>
+      <UPageCTA
+        title="Ready to get organized?"
+        description="Start tracking your life today. Sign in with GitHub to get started."
+        variant="subtle"
+        :links="isAuthenticated ? [{
+          label: 'Go to Dashboard',
+          to: '/dashboards/one',
+          trailingIcon: 'i-lucide-arrow-right',
+          color: 'neutral'
+        }] : [{
+          label: 'Sign in with GitHub',
+          icon: 'i-simple-icons-github',
+          color: 'neutral',
+          click: loginWithGithub
+        }]"
+      />
+    </UPageSection>
+  </div>
 </template>

@@ -1,18 +1,25 @@
 <script setup lang="ts">
+const { user, logout } = await useAuth();
+
 const showUsage = ref(true);
 const usage = ref(50);
 
-const items = [
+const items = computed(() => [
+  {
+    label: user.value?.name || "User",
+    icon: "i-lucide-user",
+    to: "/settings",
+  },
   {
     label: "Logout",
     icon: "i-lucide-log-out",
-    to: "/logout",
+    click: logout,
   },
-];
+]);
 
 defineProps<{
-  collapsed?: boolean
-}>()
+  collapsed?: boolean;
+}>();
 </script>
 
 <template>
