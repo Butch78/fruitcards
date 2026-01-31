@@ -4,27 +4,27 @@ import alchemy from "alchemy/cloudflare/nuxt";
 
 export default defineNuxtConfig({
   modules: [
-    '@nuxt/ui',
-    '@nuxt/hints',
-    '@nuxt/image',
+    "@nuxt/ui",
+    "@nuxt/hints",
+    "@nuxt/image",
     "nuxt-charts",
-    '@nuxt/test-utils',
-    '@nuxt/a11y',
-    'nitro-cloudflare-dev'
+    "@nuxt/test-utils",
+    "@nuxt/a11y",
+    "nitro-cloudflare-dev",
   ],
 
   vite: {
     optimizeDeps: {
-      include: ['to-px', 'striptags']
-    }
+      include: ["to-px", "striptags"],
+    },
   },
 
   devtools: {
     enabled: true,
 
     timeline: {
-      enabled: true
-    }
+      enabled: true,
+    },
   },
   nitro: {
     preset: "cloudflare-module",
@@ -35,20 +35,19 @@ export default defineNuxtConfig({
     },
   },
 
-  css: ['~/assets/css/main.css'],
+  css: ["~/assets/css/main.css"],
 
   ui: {
     colorMode: true,
   },
 
   colorMode: {
-    preference: 'dark',
+    preference: "dark",
   },
 
   routeRules: {
-    '/': { prerender: true }
+    "/": { prerender: true },
   },
 
-  compatibilityDate: '2025-01-25',
-
-})
+  compatibilityDate: "2025-01-25",
+});
