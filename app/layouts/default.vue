@@ -71,6 +71,15 @@ const dashboardsItems = computed(() => [
 
 const appsItems = computed(() => [
   {
+    label: "Transactions",
+    icon: "i-lucide-wallet",
+    to: "/apps/transactions",
+    active: route.path === "/apps/transactions",
+    onSelect: () => {
+      open.value = false;
+    },
+  },
+  {
     label: "Calendar",
     icon: "i-lucide-calendar",
     to: "/apps/calendar",
