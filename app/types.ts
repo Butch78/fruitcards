@@ -264,3 +264,81 @@ export interface BudgetSummary {
   fixedExpenses: number
   variableExpenses: number
 }
+
+// Gym/Workout Types (nSuns Program)
+export type MainLift = "bench" | "squat" | "deadlift" | "ohp"
+export type NsunsDay = "day1" | "day2" | "day3" | "day4" | "day5"
+
+export interface TrainingMax {
+  odlift: MainLift
+  weight: number
+  unit: "kg" | "lbs"
+  updatedAt: Date
+}
+
+export interface WorkoutSet {
+  setNumber: number
+  reps: number
+  percentage: number
+  weight: number
+  isAmrap: boolean
+  completedReps?: number | null
+  isCompleted: boolean
+}
+
+export interface Exercise {
+  id: string
+  name: string
+  lift: MainLift | "accessory"
+  tier: "T1" | "T2" | "T3"
+  sets: WorkoutSet[]
+}
+
+export interface WorkoutDay {
+  id: NsunsDay
+  name: string
+  t1Lift: MainLift
+  t2Lift: MainLift
+  exercises: Exercise[]
+}
+
+export interface WorkoutLog {
+  id: string
+  date: Date
+  dayId: NsunsDay
+  exercises: {
+    exerciseId: string
+    sets: {
+      setNumber: number
+      weight: number
+      targetReps: number
+      completedReps: number
+      isAmrap: boolean
+    }[]
+  }[]
+  notes?: string | null
+  duration?: number | null // minutes
+}
+
+export interface ProgressionResult {
+  lift: MainLift
+  amrapReps: number
+  currentTM: number
+  newTM: number
+  increase: number
+}
+
+export interface GymSummary {
+  trainingMaxes: Record<MainLift, TrainingMax>
+  currentWeek: number
+  todaysWorkout: WorkoutDay | null
+  recentLogs: WorkoutLog[]
+  personalRecords: {
+    lift: MainLift
+    weight: number
+    reps: number
+    date: Date
+  }[]
+  totalWorkouts: number
+  currentStreak: number
+}
