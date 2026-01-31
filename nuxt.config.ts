@@ -1,20 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
-import { existsSync } from 'node:fs'
-import { resolve } from 'node:path'
-
-// Only import alchemy when the config exists (not in CI)
-const alchemyConfigPath = resolve(process.cwd(), '.alchemy/local/wrangler.jsonc')
-const hasAlchemyConfig = existsSync(alchemyConfigPath)
-
-// Dynamically import alchemy only when config exists
-const getCloudflareConfig = async () => {
-  if (hasAlchemyConfig && !process.env.CI) {
-    const { default: alchemy } = await import('alchemy/cloudflare/nuxt')
-    return alchemy()
-  }
-  return undefined
-}
+import alchemy from "alchemy/cloudflare/nuxt";
 
 export default defineNuxtConfig({
   modules: [
@@ -23,7 +9,7 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@nuxt/test-utils',
     '@nuxt/a11y',
-    ...(hasAlchemyConfig && !process.env.CI ? ['nitro-cloudflare-dev'] : [])
+    'nitro-cloudflare-dev'
   ],
 
   devtools: {
@@ -34,8 +20,8 @@ export default defineNuxtConfig({
     }
   },
   nitro: {
-    preset: hasAlchemyConfig && !process.env.CI ? "cloudflare-module" : "node-server",
-    cloudflare: hasAlchemyConfig && !process.env.CI ? await getCloudflareConfig() : undefined,
+    preset: "cloudflare-module",
+    cloudflare: alchemy(),
     prerender: {
       routes: ["/"],
       autoSubfolderIndex: false,
