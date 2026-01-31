@@ -7,7 +7,7 @@ import { D1Database, Nuxt } from "alchemy/cloudflare";
 const app = await alchemy("fruitcards", {
   password: process.env.ALCHEMY_PASSWORD || process.env.ALCHEMY_SECRET_PASSWORD,
   // Use local filesystem for development, cloud for production
-  stateStore: process.env.NODE_ENV === "production" 
+  stateStore: process.env.NODE_ENV === "production"
     ? (scope) => new CloudflareStateStore(scope)
     : undefined // Uses default FileSystemStateStore
 });
@@ -35,11 +35,6 @@ export const worker = await Nuxt("fruitcards", {
   domains: app.stage === "prod" ? ["fruit.cards"] : undefined,
   bindings: {
     DB: db,
-  },
-  vars: {
-    BETTER_AUTH_URL: app.stage === "prod"
-      ? "https://fruit.cards"
-      : `https://fruitcards-${app.stage}.workers.dev`,
   },
   dev: {
     command: "nuxt dev",

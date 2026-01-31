@@ -39,6 +39,8 @@ export function createAuth(db: DrizzleD1Database<typeof schema>) {
 
     trustedOrigins: [
       "https://fruit.cards",
+      "https://fruitcards-prod.aussiedevjobs.workers.dev",
+      "https://fruitcards-aylwardm.aussiedevjobs.workers.dev",
       "http://localhost:3000",
     ],
   });

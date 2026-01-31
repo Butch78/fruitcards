@@ -1,5 +1,5 @@
 {
-  "name": "fruitcards-aylwardm",
+  "name": "fruitcards-prod",
   "main": "../../.output/server/index.mjs",
   "compatibility_date": "2026-01-28",
   "compatibility_flags": [
@@ -19,10 +19,10 @@
   "d1_databases": [
     {
       "binding": "DB",
-      "database_id": "0818e31a-0141-4525-b06d-928a4132ef0a",
-      "database_name": "fruitcards-aylwardm-db",
+      "database_id": "99e75960-c234-4d09-b072-7c2630840aa9",
+      "database_name": "fruitcards-prod-db",
       "migrations_dir": "./migrations",
-      "preview_database_id": "0818e31a-0141-4525-b06d-928a4132ef0a",
+      "preview_database_id": "99e75960-c234-4d09-b072-7c2630840aa9",
       "remote": true
     }
   ],

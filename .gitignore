@@ -16,6 +16,10 @@ dist
 .alchemy/local/*
 !.alchemy/local/wrangler.jsonc
 
+# Wrangler local state
+.wrangler/
+wrangler.jsonc
+
 # Node dependencies
 node_modules
 
