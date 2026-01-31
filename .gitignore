@@ -6,8 +6,11 @@
 .cache
 dist
 
-# Alchemy
-.alchemy/
+# Alchemy (keep wrangler config, ignore state)
+.alchemy/*
+!.alchemy/local/
+.alchemy/local/*
+!.alchemy/local/wrangler.jsonc
 
 # Node dependencies
 node_modules
