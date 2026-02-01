@@ -6,11 +6,14 @@ const color = computed(() => colorMode.value === 'dark' ? '#1b1718' : 'white')
 useHead({
   meta: [
     { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+    { name: 'viewport', content: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover' },
+    { name: 'apple-mobile-web-app-capable', content: 'yes' },
+    { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },
     { key: 'theme-color', name: 'theme-color', content: color }
   ],
   link: [
-    { rel: 'icon', href: '/favicon.ico' }
+    { rel: 'icon', href: '/favicon.ico' },
+    { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' }
   ],
   htmlAttrs: {
     lang: 'en'
@@ -51,5 +54,7 @@ function hideBanner() {
 
     <DiscountBanner class="z-50 max-w-4xl px-4 rounded-full mt-3 scale-110 top mx-auto" :visible="bannerVisible"
       @close="hideBanner" />
+
+    <PwaInstallPrompt />
   </UApp>
 </template>

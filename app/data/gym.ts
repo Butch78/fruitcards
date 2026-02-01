@@ -218,11 +218,12 @@ export function getTodaysWorkout(trainingMaxes: Record<MainLift, TrainingMax>): 
   }
 
   const nsunsDayIndex = dayOfWeek - 1;
-  if (nsunsDayIndex >= nsunsSchedule.length) {
+  const scheduleDay = nsunsSchedule[nsunsDayIndex];
+  if (!scheduleDay) {
     return null;
   }
 
-  return generateWorkoutDay(nsunsSchedule[nsunsDayIndex], trainingMaxes);
+  return generateWorkoutDay(scheduleDay, trainingMaxes);
 }
 
 // Get gym summary

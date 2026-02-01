@@ -270,7 +270,7 @@ export type MainLift = "bench" | "squat" | "deadlift" | "ohp"
 export type NsunsDay = "day1" | "day2" | "day3" | "day4" | "day5"
 
 export interface TrainingMax {
-  odlift: MainLift
+  lift: MainLift
   weight: number
   unit: "kg" | "lbs"
   updatedAt: Date
