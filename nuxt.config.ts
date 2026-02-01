@@ -12,7 +12,24 @@ export default defineNuxtConfig({
     "@nuxt/a11y",
     "nitro-cloudflare-dev",
     "@vite-pwa/nuxt",
+    "nuxt-calendar",
   ],
+
+  NuxtCalendar: {
+    timeFormat: "24h",
+    i18n: {
+      locale: "en",
+      timezone: "Europe/Zurich",
+      weekStartsOn: 1, // Monday
+    },
+    layout: {
+      sidePanel: true,
+      navigation: true,
+    },
+    enableIcsExport: true,
+    enableIcsImport: false,
+    enableDatabaseSync: false,
+  },
 
   pwa: {
     registerType: "autoUpdate",
