@@ -1,0 +1,165 @@
+{
+  "version": 1,
+  "skills": {
+    "floating-ui-vue-skilld": {
+      "source": "harlan-zw/vue-ecosystem-skills",
+      "sourceType": "github",
+      "computedHash": "e9a2f618179cd92bd5020096c71020e16df664f2d661a732b18a5a2ffa057bd8"
+    },
+    "formkit-core-skilld": {
+      "source": "harlan-zw/vue-ecosystem-skills",
+      "sourceType": "github",
+      "computedHash": "4e65ae761d824a06ce0972e3a84d62f76c359f24cad4032a8073d35e01cfad56"
+    },
+    "motion-v-skilld": {
+      "source": "harlan-zw/vue-ecosystem-skills",
+      "sourceType": "github",
+      "computedHash": "e7215dec0aae1996937771232363b3f75886ad08eadfc57d69ff7002a71bc823"
+    },
+    "pinia-colada-skilld": {
+      "source": "harlan-zw/vue-ecosystem-skills",
+      "sourceType": "github",
+      "computedHash": "024e41f5d7be0a838515c01525a3f88c591ab59a904f83fd8a010a4b4a6ad2a0"
+    },
+    "pinia-skilld": {
+      "source": "harlan-zw/vue-ecosystem-skills",
+      "sourceType": "github",
+      "computedHash": "ea6b1ba426dde6b9d639558f3e596d6d1bb0117e20c4aafe02587855c8d71cb5"
+    },
+    "primevue-skilld": {
+      "source": "harlan-zw/vue-ecosystem-skills",
+      "sourceType": "github",
+      "computedHash": "f8b482585d7903e738b736f2ff7f5a79c95be74e5e7ada74837ca4ff65eb6fdd"
+    },
+    "quasar-skilld": {
+      "source": "harlan-zw/vue-ecosystem-skills",
+      "sourceType": "github",
+      "computedHash": "07a103a2fcd17534fae4f6860847763116be54b9afcdac0a0b964023f332f4b7"
+    },
+    "reka-ui-skilld": {
+      "source": "harlan-zw/vue-ecosystem-skills",
+      "sourceType": "github",
+      "computedHash": "e9bfe0b22167cbe041cd99483a266c2867c1b087b0b3d36784cfc6ab8b1df035"
+    },
+    "shadcn-vue-skilld": {
+      "source": "harlan-zw/vue-ecosystem-skills",
+      "sourceType": "github",
+      "computedHash": "8caa163605908a2a486787c16085240516ad22f1634356f66cdd5880bc21ff8a"
+    },
+    "tanstack-ai-vue-skilld": {
+      "source": "harlan-zw/vue-ecosystem-skills",
+      "sourceType": "github",
+      "computedHash": "f0456db5ec447edf7fd774f919907529b42ac643fbc87ef7250c2e23f617ef0f"
+    },
+    "tanstack-vue-form-skilld": {
+      "source": "harlan-zw/vue-ecosystem-skills",
+      "sourceType": "github",
+      "computedHash": "aa756d69a9390f67a62dfc3631270f3a2ac62696a9e23a162dd395f1182149b9"
+    },
+    "tanstack-vue-query-skilld": {
+      "source": "harlan-zw/vue-ecosystem-skills",
+      "sourceType": "github",
+      "computedHash": "7945e9d6396a0ae3c3eebb38e418a83a284d14a5a4a9adaab3887a2f9b5b2e08"
+    },
+    "tanstack-vue-router-skilld": {
+      "source": "harlan-zw/vue-ecosystem-skills",
+      "sourceType": "github",
+      "computedHash": "a98ba557f120528cf6bda7213eefdb26abad511e1bd56fc8c837a92d78ddfaf4"
+    },
+    "tanstack-vue-store-skilld": {
+      "source": "harlan-zw/vue-ecosystem-skills",
+      "sourceType": "github",
+      "computedHash": "3830cfecec9c727b8401aae5e4e3b5f954370c58fe4fc2a904d70be9a5b9bdb2"
+    },
+    "tanstack-vue-table-skilld": {
+      "source": "harlan-zw/vue-ecosystem-skills",
+      "sourceType": "github",
+      "computedHash": "8306ec0f1122e3b6d88cfa6b352fa755ce959b1d93f29c930e978ec9e5d033be"
+    },
+    "tanstack-vue-virtual-skilld": {
+      "source": "harlan-zw/vue-ecosystem-skills",
+      "sourceType": "github",
+      "computedHash": "0bb75134363350b340119857aa9e09951085b3a13bb531da8efbe00498018eca"
+    },
+    "tresjs-core-skilld": {
+      "source": "harlan-zw/vue-ecosystem-skills",
+      "sourceType": "github",
+      "computedHash": "147413aaf7888d25380eb423e7d1f1859ea0253c59d4b7524dd4541f2fa5317e"
+    },
+    "unovis-vue-skilld": {
+      "source": "harlan-zw/vue-ecosystem-skills",
+      "sourceType": "github",
+      "computedHash": "465202a094de74ec6b72f86e950a1b1e2852869ccab08166c8b5ad71a43c70c5"
+    },
+    "vee-validate-skilld": {
+      "source": "harlan-zw/vue-ecosystem-skills",
+      "sourceType": "github",
+      "computedHash": "2bdbf6c262cb9356e51eb84d2f4158e0c98df3110ee194b880705dc4569b4aeb"
+    },
+    "vitepress-skilld": {
+      "source": "harlan-zw/vue-ecosystem-skills",
+      "sourceType": "github",
+      "computedHash": "401f5f646fe3d20e17aa73fdb55d35e11a3f9f3b4761b6946316109bbf76328f"
+    },
+    "vue-data-ui-skilld": {
+      "source": "harlan-zw/vue-ecosystem-skills",
+      "sourceType": "github",
+      "computedHash": "0d5b4912b7b1ebabc3d3e365cd24902e73c6c54b00fca2a824b0efb176856c02"
+    },
+    "vue-i18n-skilld": {
+      "source": "harlan-zw/vue-ecosystem-skills",
+      "sourceType": "github",
+      "computedHash": "027397efd9aa8cfb58cc5cdecb392c87de4b5592f3962b21bb32f2298f31ba97"
+    },
+    "vue-router-skilld": {
+      "source": "harlan-zw/vue-ecosystem-skills",
+      "sourceType": "github",
+      "computedHash": "44883dd029a8ef9369af1e5d4ee7ded7c2c49bf8990868516b9e6ae1b2b5be83"
+    },
+    "vue-skilld": {
+      "source": "harlan-zw/vue-ecosystem-skills",
+      "sourceType": "github",
+      "computedHash": "4d2b67e9bb98ac7f3945c55c5f1288bcafcfbc0d3037be0dccd1f1a01d94556a"
+    },
+    "vue-test-utils-skilld": {
+      "source": "harlan-zw/vue-ecosystem-skills",
+      "sourceType": "github",
+      "computedHash": "fa25ed11bc98e556b4702c7906954c34f61aaffcc0dde53272fd78a36e46d5dc"
+    },
+    "vuetify-skilld": {
+      "source": "harlan-zw/vue-ecosystem-skills",
+      "sourceType": "github",
+      "computedHash": "894739e6d2cc6b617bfd15856b596915f06e7b201d9edc637d16dbe20e085b90"
+    },
+    "vueuse-components-skilld": {
+      "source": "harlan-zw/vue-ecosystem-skills",
+      "sourceType": "github",
+      "computedHash": "66c5a47fabb8a10634b1f02a9ce09671911df7ad0057421bc8b6f08efedb3ae6"
+    },
+    "vueuse-core-skilld": {
+      "source": "harlan-zw/vue-ecosystem-skills",
+      "sourceType": "github",
+      "computedHash": "a15a0ca3f3b7bf73997d824d546aa44c6e7dcb9d200c1660989718d8462f0008"
+    },
+    "vueuse-integrations-skilld": {
+      "source": "harlan-zw/vue-ecosystem-skills",
+      "sourceType": "github",
+      "computedHash": "d8bc5359816c253be8dfb0c16795ece037572a01e8fc20b8d8751f8ad89acb9c"
+    },
+    "vueuse-math-skilld": {
+      "source": "harlan-zw/vue-ecosystem-skills",
+      "sourceType": "github",
+      "computedHash": "9eb5c654a790a40266b2773f2a9d37c46e4dee6cbeddd5fb607e9badc115e1c4"
+    },
+    "vueuse-motion-skilld": {
+      "source": "harlan-zw/vue-ecosystem-skills",
+      "sourceType": "github",
+      "computedHash": "23490e749d8137df461f823d2f6f22d6d70b6e941318b32f07ff23791f8e3727"
+    },
+    "vueuse-shared-skilld": {
+      "source": "harlan-zw/vue-ecosystem-skills",
+      "sourceType": "github",
+      "computedHash": "78e81ee88b96fc78112bc312e0fc7d19c8635a0af2c7c8d804857e15c0e02699"
+    }
+  }
+}
